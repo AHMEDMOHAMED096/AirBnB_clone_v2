@@ -11,22 +11,23 @@ def do_deploy(archive_path):
     """This method distributes an archive to web servers"""
     if not os.path.exists(archive_path):
         return False
+    try:
+        archive_filename = os.path.basename(archive_path).split(".")[0]
 
-    archive_filename = os.path.basename(archive_path).split(".")[0]
+        put(archive_path, "/tmp")
+        run("mkdir -p /data/web_static/releases/{}".format(archive_filename))
 
-    put(archive_path, "/tmp")
-    run("mkdir -p /data/web_static/releases/{}".format(archive_filename))
+        with cd("/data/web_static/releases/{}".format(archive_filename)):
+            run("tar -xzf /tmp/{} -C .".format(os.path.basename(archive_path)))
 
-    with cd("/data/web_static/releases/{}".format(archive_filename)):
-        run("tar -xzf /tmp/{} -C .".format(os.path.basename(archive_path)))
+        run("rm -rf /tmp/{}".format(os.path.basename(archive_path)))
 
-    run("rm -rf /tmp/{}".format(os.path.basename(archive_path)))
+        run("rm -rf /data/web_static/current")
 
-    run("rm -rf /data/web_static/current")
-
-    run(
-        f"ln -sF /data/web_static/releases/{archive_filename} \
-        /data/web_static/current"
-    )
-
-    return True
+        run(
+            f"ln -sF /data/web_static/releases/{archive_filename} \
+            /data/web_static/current"
+            )
+        return True
+    except Exception as e:
+        return False
