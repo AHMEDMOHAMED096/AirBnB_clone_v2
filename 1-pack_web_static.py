@@ -6,7 +6,8 @@ import os
 
 
 def do_pack():
-    """This method generates a tgz archive from the contents of the web_static"""
+    """This method generates a tgz archive from the contents of
+    the web_static folder"""
     current_datetime = datetime.now()
 
     archive_name = current_datetime.strftime("web_static_%Y%m%d%H%M%S.tgz")
