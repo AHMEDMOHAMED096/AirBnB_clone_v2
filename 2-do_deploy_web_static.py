@@ -18,7 +18,7 @@ def do_deploy(archive_path):
     run("mkdir -p /data/web_static/releases/{}".format(archive_filename))
 
     with cd("/data/web_static/releases/{}".format(archive_filename)):
-        run("tar -xzf /tmp/{} -C /".format(os.path.basename(archive_path)))
+        run("tar -xzf /tmp/{} -C .".format(os.path.basename(archive_path)))
 
     run("rm -rf /tmp/{}".format(os.path.basename(archive_path)))
 
