@@ -3,11 +3,8 @@
 from fabric.api import *
 from fabric.context_managers import cd
 import os
-import sys
 
 env.hosts = ["52.91.118.245", "100.26.50.62"]
-env.key_filename = "./id_rsa"
-env.user = "ubuntu"
 
 
 def do_deploy(archive_path):
@@ -33,11 +30,3 @@ def do_deploy(archive_path):
     )
 
     return True
-
-
-if __name__ == "__main__":
-    for arg in sys.argv:
-        if arg.startswith("archive_path="):
-            archive_path = arg.split("=")[1]
-            do_deploy(archive_path)
-            break
