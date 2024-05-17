@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Import required modules"""
 from fabric.api import *
-from fabric.context_managers import cd
 import os
 
 env.hosts = ["52.91.118.245", "100.26.50.62"]
@@ -12,23 +11,27 @@ def do_deploy(archive_path):
     if not os.path.exists(archive_path):
         return False
     try:
-        archive_filename = os.path.basename(archive_path).split(".")[0]
+        original_filename = os.path.basename(archive_path)
+        filename_without_ext = os.path.basename(archive_path).split(".")[0]
+        path = "/data/web_static/releases/"
 
         put(archive_path, "/tmp")
-        run("mkdir -p /data/web_static/releases/{}".format(archive_filename))
+        run("mkdir -p {}{}".format(filename_without_ext, path))
 
-        with cd("/data/web_static/releases/{}".format(archive_filename)):
-            run("tar -xzf /tmp/{} --strip-components=1"
-                .format(os.path.basename(archive_path)))
+        run("tar -xzf /tmp/{} -C {}{}"
+            .format(original_filename, path, filename_without_ext))
 
-        run("rm -rf /tmp/{}".format(os.path.basename(archive_path)))
+        run("rm /tmp/{}".format(original_filename))
+
+        run("mv {0}{1}/web_static/* {0}{1}/"
+            .format(path, filename_without_ext))
+
+        run("rm -rf {}{}/web_static".format(path, filename_without_ext))
 
         run("rm -rf /data/web_static/current")
 
-        run(
-            f"ln -sF /data/web_static/releases/{archive_filename} \
-            /data/web_static/current"
-            )
+        run("ln -s {}{}/ /data/web_static/current"
+            .format(path, filename_without_ext))
         return True
     except Exception as e:
         return False
