@@ -5,7 +5,9 @@ from fabric.context_managers import cd
 import os
 import sys
 
-env.hosts = ["ubuntu@52.91.118.245", "ubuntu@100.26.50.62"]
+env.hosts = ["52.91.118.245", "100.26.50.62"]
+env.key_filename = "./id_rsa"
+env.user = "ubuntu"
 
 
 def do_deploy(archive_path):
