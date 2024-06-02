@@ -22,7 +22,7 @@ def hbnb():
 def display_text(text):
     """Displays Html text"""
     modified_text = text.replace("_", " ")
-    return modified_text
+    return f"C {modified_text}"
 
 
 if __name__ == "__main__":
