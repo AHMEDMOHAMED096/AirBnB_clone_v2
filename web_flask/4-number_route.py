@@ -33,6 +33,7 @@ def display_P_text(text="is cool"):
     return f"Python {modified_text}"
 
 
+@app.route("/number/")
 @app.route("/number/<n>")
 def display_number(n):
     """Displays the value of n if it is an integer only"""
