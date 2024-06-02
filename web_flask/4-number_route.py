@@ -33,13 +33,10 @@ def display_P_text(text="is cool"):
     return f"Python {modified_text}"
 
 
-@app.route("/number/")
-@app.route("/number/<n>")
+@app.route("/number/<int:n>")
 def display_number(n):
     """Displays the value of n if it is an integer only"""
-    if isinstance(n, int):
-        return f"{n} is a number"
-    return n
+    return f"{n} is a number"
 
 
 if __name__ == "__main__":
