@@ -20,14 +20,15 @@ def hbnb():
 
 @app.route("/c/<text>")
 def display_text(text):
-    """Displays Html text"""
+    """Displays 'C ' followed by the value of the text variable"""
     modified_text = text.replace("_", " ")
     return f"C {modified_text}"
 
 
+@app.route("/python/")
 @app.route("/python/<text>")
 def display_P_text(text="is cool"):
-    """Displays Html text"""
+    """Displays 'Python ' followed by the value of the text variable"""
     modified_text = text.replace("_", " ")
     return f"Python {modified_text}"
 
