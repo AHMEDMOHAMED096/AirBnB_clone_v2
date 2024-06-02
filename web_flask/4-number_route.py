@@ -38,6 +38,7 @@ def display_number(n):
     """Displays the value of n if it is an integer only"""
     if isinstance(n, int):
         return f"{n} is a number"
+    return n
 
 
 if __name__ == "__main__":
