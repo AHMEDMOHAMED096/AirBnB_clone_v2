@@ -1,0 +1,36 @@
+#!/usr/bin/python3
+"""A script that starts a Flask web application"""
+from flask import Flask
+
+app = Flask(__name__)
+app.url_map.strict_slashes = False
+
+
+@app.route("/")
+def hello_hbnb():
+    """Displays Hello HBNB!"""
+    return "Hello HBNB!"
+
+
+@app.route("/hbnb")
+def hbnb():
+    """Displays HBNB"""
+    return "HBNB"
+
+
+@app.route("/c/<text>")
+def display_text(text):
+    """Displays Html text"""
+    modified_text = text.replace("_", " ")
+    return f"C {modified_text}"
+
+
+@app.route("/python/<text>")
+def display_P_text(text="is cool"):
+    """Displays Html text"""
+    modified_text = text.replace("_", " ")
+    return f"Python {modified_text}"
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0")
