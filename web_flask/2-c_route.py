@@ -21,10 +21,8 @@ def hbnb():
 @app.route("/c/<text>")
 def display_text(text):
     """Displays Html text"""
-    for ch in text:
-        if ch == "_":
-            text = text.replace("_", " ")
-    return text
+    modified_text = text.replace("_", " ")
+    return modified_text
 
 
 if __name__ == "__main__":
