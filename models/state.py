@@ -24,8 +24,8 @@ class State(BaseModel, Base):
             from models import storage
 
             """ getter method that returns list of City instances """
-            return [
-                City
-                for _, City in storage.all("City").items()
-                if City.state_id == self.id
-            ]
+            city_list = []
+            for city in storage.all(City).values():
+                if city.state_id == self.id:
+                    city_list.append(city)
+            return city_list
