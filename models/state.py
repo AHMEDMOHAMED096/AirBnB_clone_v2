@@ -9,18 +9,23 @@ from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
-    """ State class """
-    __tablename__ = 'states'
+    """State class"""
+
+    __tablename__ = "states"
     name = Column(String(128), nullable=False)
-    cities = relationship("City",
-                          backref="state",
+    cities = relationship("City", backref="state",
                           cascade="all, delete-orphan")
 
     # Getter in case of storage type is FileStorage
-    if getenv('HBNB_TYPE_STORAGE') != 'db':
+    if getenv("HBNB_TYPE_STORAGE") != "db":
+
         @property
         def cities(self):
             from models import storage
-            """ getter method that returls list of City instances """
-            return [City for _, City in storage.all("City").items()
-                    if City.state_id == self.id]
+
+            """ getter method that returns list of City instances """
+            return [
+                City
+                for _, City in storage.all("City").items()
+                if City.state_id == self.id
+            ]
